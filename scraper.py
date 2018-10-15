@@ -122,6 +122,9 @@ def getYelpUrl(bars):
 				option = x.span.text.lower()
 				if option == barNameForSearch:
 					bar.yelpUrl = 'https://www.yelp.com' + x['href']
+					print(bar.yelpUrl)
+					bar.yelpUrl = bar.yelpUrl.split('?osq=')[0]
+					print(bar.yelpUrl)
 					bar.match = True
 					print('Auto-matching {} to {}. ({})'.format(option, bar.name, bar.yelpUrl))
 					break
@@ -151,7 +154,7 @@ def getYelpUrl(bars):
 			waitInterval = random.choice(waitIntervals)
 			print('Waiting {} seconds.'.format(waitInterval))
 			print('\n\n')
-			time.sleep(random.choice(waitInterval))
+			time.sleep(waitInterval)
 	return bars
 
 #writing the info we have, including Yelp url for each bar.
@@ -190,6 +193,8 @@ def getReviews(bars):
 			for step in html.find_all(attrs={'class': 'review-content'}):
 				midResult.extend(step.find_all('p'))
 			print('Appending {} reviews for {}.'.format(len(midResult), bars[i].name))
+			print(midResult[0])
+			print('\n {} \n'.format(midResult[-1]))
 			for x in midResult:
 				finalResults.append('{}\n\n'.format(x.text))
 			pageInt += 20
