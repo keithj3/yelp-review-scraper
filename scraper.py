@@ -30,8 +30,8 @@ def getUserAgents():
 
 def initializeBarInfo():
     bars = []
-    for i in range(len(barsToScan)):
-        bar = Bar(barsToScan[i].lower())
+    for b in barsToScan:
+        bar = Bar(b.lower())
         bars.append(bar)
     return bars
 
@@ -67,7 +67,7 @@ def getHeaders(barName, review=False, pageUrl=None):
     '''
 	If used for iterating through pages of reviews, pass:
 		review=True, pageUrl=url
-	This will make the referer the previous page of results 
+	This will make the referer the previous page of results
 	instead of Google.
 	'''
     try:
@@ -185,22 +185,22 @@ def getReviews(bars):
             y = y.split('1 of')[1]
         return int(y)
 
-    for i in range(len(bars)):
+    for b in bars:
         finalResults, midResult, pageInt, cycleNumber = [], ['a'], 0, 1
-        headers = getHeaders(bars[i].name)
-        url = bars[i].yelpUrl + '?start={}'.format(str(pageInt))
+        headers = getHeaders(b.name)
+        url = b.yelpUrl + '?start={}'.format(str(pageInt))
         resp = getUrl(url, headers=headers)
         html = BeautifulSoup(resp.content, 'html.parser')
         numberOfPages = getNumberOfPages(html)
         for p in range(numberOfPages):
             print('Page {} of {}.'.format(p, numberOfPages))
-            url = bars[i].yelpUrl + '?start={}'.format(str(pageInt))
+            url = b.yelpUrl + '?start={}'.format(str(pageInt))
             print('Attempting response from {}'.format(url))
             midResult = []
             # On first page, we already have the html from getting the page number so use
             # that instead of making a new request.
             if cycleNumber != 1:
-                headers = getHeaders(bars[i].name, review=True, pageUrl=url)
+                headers = getHeaders(b.name, review=True, pageUrl=url)
                 resp = getUrl(url, headers=headers)
                 html = BeautifulSoup(resp.content, 'html.parser')
             else:
@@ -215,7 +215,7 @@ def getReviews(bars):
             pageInt += 20
             cycleNumber += 1
             time.sleep(random.choice(waitIntervalsLong))
-        with open(os.path.join(DATA_DIR, bars[i].name + '.txt'), 'w') as f:
+        with open(os.path.join(DATA_DIR, b.name + '.txt'), 'w') as f:
             f.writelines(finalResults)
 
 

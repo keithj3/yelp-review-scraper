@@ -4,7 +4,7 @@ barsToScan = [
 	'CU29',
 	'BD Rileys',
 	'rustic tap',
-	'violet crown', 
+	'violet crown',
 	'bat bar'
 
 ]
