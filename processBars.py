@@ -41,7 +41,7 @@ def getWords():
 		print('Processing {}'.format(bar))
 		filename = bar.lower() + '.txt'
 		#con=open(os.path.join(DATA_DIR, filename))
-		con=open(os.path.join('', filename))
+		con=open(os.path.join('barTextFiles/', filename))
 		rev=con.read()
 		con.close()
 
