@@ -5,6 +5,10 @@ import time
 from source import barsToScan
 import random
 import string
+import os
+from processBars import *
+
+DATA_DIR='barTextFiles/'
 
 #For searching for bars
 waitIntervals = [2, 3, 4, 5, 6, 7]
@@ -193,21 +197,26 @@ def getReviews(bars):
 			for step in html.find_all(attrs={'class': 'review-content'}):
 				midResult.extend(step.find_all('p'))
 			print('Appending {} reviews for {}.'.format(len(midResult), bars[i].name))
-			print(midResult[0])
-			print('\n {} \n'.format(midResult[-1]))
+			print('First review on page: {}'.format(midResult[0].text))
+			print('\n Last review on page: {} \n'.format(midResult[-1].text))
 			for x in midResult:
 				finalResults.append('{}\n\n'.format(x.text))
 			pageInt += 20
 			cycleNumber += 1
 			time.sleep(random.choice(waitIntervalsLong))
-		with open(bars[i].name + '.txt', 'w') as f:
+		with open(os.path.join(DATA_DIR, bars[i].name + '.txt') , 'w') as f:
 			f.writelines(finalResults)
 
 if __name__ == "__main__":
-	userAgents = getUserAgents()
-	bars = initializeBarInfo()
-	bars = getYelpUrl(bars)
-	writeBarsToFile(bars)
-	getReviews(bars)
-
+	choice = input('Would you like to (1) scrape the reviews of the bars in the source file, or (2) proceed to the language processing? Enter 1 or 2.')
+	if choice == str(1):
+		userAgents = getUserAgents()
+		bars = initializeBarInfo()
+		bars = getYelpUrl(bars)
+		writeBarsToFile(bars)
+		getReviews(bars)
+	elif choice == str(2):
+		getWords()
+	else:
+		print('u no type good.')
 
