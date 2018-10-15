@@ -214,6 +214,14 @@ if __name__ == "__main__":
 		bars = getYelpUrl(bars)
 		writeBarsToFile(bars)
 		getReviews(bars)
+		proceed = input("Would you like to proceed to language processing? y or n.".lower())
+		if proceed == y:
+			getWords()
+		elif proceed == n:
+			print('Data saved. Exiting.')
+			quit()
+		else: 
+			print('u no type good.')
 	elif choice == str(2):
 		getWords()
 	else:
