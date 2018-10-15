@@ -91,6 +91,7 @@ def getYelpUrl(bars):
 			pass
 		elif choice == 'y': 
 			bar.yelpUrl = 'https://www.yelp.com' + x['href']
+			bar.yelpUrl = bar.yelpUrl.split('?osq=')[0]
 			print('URL recorded. ', bar.yelpUrl)
 			bar.match = True
 			return bar
@@ -126,9 +127,7 @@ def getYelpUrl(bars):
 				option = x.span.text.lower()
 				if option == barNameForSearch:
 					bar.yelpUrl = 'https://www.yelp.com' + x['href']
-					print(bar.yelpUrl)
 					bar.yelpUrl = bar.yelpUrl.split('?osq=')[0]
-					print(bar.yelpUrl)
 					bar.match = True
 					print('Auto-matching {} to {}. ({})'.format(option, bar.name, bar.yelpUrl))
 					break
