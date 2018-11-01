@@ -207,7 +207,7 @@ def getReviews(bars):
                 pass
             for step in html.find_all(attrs={'class': 'review-content'}):
                 midResult.extend(step.find_all('p'))
-            print('Appending {} reviews for {}.'.format(len(midResult), bars[i].name))
+            print('Appending {} reviews for {}.'.format(len(midResult), b.name))
             print('First review on page: {}'.format(midResult[0].text))
             print('\n Last review on page: {} \n'.format(midResult[-1].text))
             for x in midResult:
